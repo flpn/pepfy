@@ -10,3 +10,7 @@ def fooBar():
 def dec():
     def wrapper():
         pass
+
+class Foo:
+    class bar(object):
+        pass

@@ -1,4 +1,6 @@
+FUNCTION_KEYWORD = 'def'
 FUNCTION_START_INDEX = 4
+CLASS_KEYWORD = 'class'
 CLASS_START_INDEX = 6
 
 
@@ -25,18 +27,17 @@ def tab_counter(line):
             return line.index(char) // 4
 
 
-def search_function_names(file_path):
-    function_names = set()
+def search_names(file_path, keyword, start_index, obj):
+    names = set()
 
     with open(file_path) as ugly_file:
         for line in ugly_file.readlines():
             beginning_of_line = tab_counter(line) * 4
 
-            if line.startswith('def', beginning_of_line):
-                start_index = FUNCTION_START_INDEX + beginning_of_line
-                final_index = line.index('(')
+            if line.startswith(keyword, beginning_of_line):
+                start_index = start_index + beginning_of_line
+                final_index = line.index('(') if '(' in line else line.index(':')
                 name = line[start_index:final_index]
-                function_names.add(FunctionName(name))
+                names.add(obj(name))
 
-    return function_names
-
+    return names
