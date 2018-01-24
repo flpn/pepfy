@@ -1,31 +1,41 @@
+FUNCTION_START_INDEX = 4
+CLASS_START_INDEX = 6
+
+
+class Name:
+    def __init__(self, old_name):
+        self.old_name = old_name
+
+
+class FunctionName(Name):
+    def __init__(self, old_name, new_name=None):
+        super().__init__(old_name)
+        self.new_name = new_name
+
+
+class ClassName(Name):
+    def __init__(self, old_name, new_name=None):
+        super().__init__(old_name)
+        self.new_name = new_name
+
+
 def tab_counter(line):
     for char in line:
         if char != ' ':
             return line.index(char) // 4
 
 
-def pep_function_header(line):
-    if line.startswith('def', (tab_counter(line) * 4)):
-        l = list(line)
-        excludes = {' ', '(', ')'}
+def search_function_names(file_patth):
+    function_names = []
 
-        for i in range(len(l)):
-            if l[i].isupper():
-                l[i] = l[i].lower()
-
-                if not l[i - 1] in excludes and not l[i + 1] in excludes:
-                    l.insert(i, '_')
-
-        return ''.join(l)
-    else:
-        return line
-
-
-if __name__ == '__main__':
-    with open('foo.py') as ugly_file:
-        new_file = ''
-
+    with open(file_patth) as ugly_file:
         for line in ugly_file.readlines():
-            new_file += pep_function_header(line)
+            beginning_of_line = tab_counter(line) * 4
 
-        print(new_file)
+            if line.startswith('def', beginning_of_line):
+                start_index = FUNCTION_START_INDEX + beginning_of_line
+                final_index = line.index('(')
+                name = line[start_index:final_index]
+                function_names.append(FunctionName(name))
+
+    return function_names

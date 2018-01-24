@@ -6,3 +6,7 @@ def Bar():
 
 def fooBar():
     return 'fooBar'
+
+def dec():
+    def wrapper():
+        pass
