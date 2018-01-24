@@ -14,6 +14,24 @@ class FunctionName(Name):
         super().__init__(old_name)
         self.new_name = new_name
 
+    def pepfy_name(self):
+        new_name = list(self.old_name)
+        i = 0
+
+        while True:
+            try:
+                if new_name[i].isupper():
+                    new_name[i] = new_name[i].lower()
+
+                    if 0 < i < len(new_name):
+                        new_name.insert(i, '_')
+
+                i += 1
+            except IndexError:
+                break
+
+        return ''.join(new_name)
+
 
 class ClassName(Name):
     def __init__(self, old_name, new_name=None):
@@ -41,3 +59,7 @@ def search_names(file_path, keyword, start_index, obj):
                 names.add(obj(name))
 
     return names
+
+
+if __name__ == '__main__':
+    pass
