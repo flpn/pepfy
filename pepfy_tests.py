@@ -34,7 +34,7 @@ class TestFunctionName(unittest.TestCase):
         obj = pepfy.FunctionName('HWORLD')
         self.assertEqual(obj.pepfy_name(), 'h_w_o_r_l_d')
 
-    def test_pepfy_name_constant_like(self):
+    def test_pepfy_name_one(self):
         obj = pepfy.FunctionName('H')
         self.assertEqual(obj.pepfy_name(), 'h')
 
