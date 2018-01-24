@@ -5,8 +5,8 @@ import pepfy
 
 class TestSearches(unittest.TestCase):
     def test_search_function_names(self):
-        real = list(map(lambda fn: fn.old_name, pepfy.search_function_names('foo.py')))
-        expected = ['foo', 'Bar', 'fooBar', 'dec', 'wrapper']
+        real = set(map(lambda fn: fn.old_name, pepfy.search_function_names('foo.py')))
+        expected = {'foo', 'Bar', 'fooBar', 'dec', 'wrapper'}
         self.assertEqual(real, expected)
 
 

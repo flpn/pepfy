@@ -25,10 +25,10 @@ def tab_counter(line):
             return line.index(char) // 4
 
 
-def search_function_names(file_patth):
-    function_names = []
+def search_function_names(file_path):
+    function_names = set()
 
-    with open(file_patth) as ugly_file:
+    with open(file_path) as ugly_file:
         for line in ugly_file.readlines():
             beginning_of_line = tab_counter(line) * 4
 
@@ -36,6 +36,7 @@ def search_function_names(file_patth):
                 start_index = FUNCTION_START_INDEX + beginning_of_line
                 final_index = line.index('(')
                 name = line[start_index:final_index]
-                function_names.append(FunctionName(name))
+                function_names.add(FunctionName(name))
 
     return function_names
+
