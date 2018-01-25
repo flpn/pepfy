@@ -38,6 +38,25 @@ class ClassName(Name):
         super().__init__(old_name)
         self.new_name = new_name
 
+    def pepfy_name(self):
+        new_name = list(self.old_name)
+        i = 0
+
+        while True:
+            try:
+                if i > 0 and self.old_name[i - 1] != '_' and self.old_name[i - 1].isupper():
+                    new_name[i] = new_name[i].lower()
+                elif i < len(new_name) - 1 and  new_name[i] == '_':
+                    new_name[i + 1] = new_name[i + 1].upper()
+
+                i += 1
+            except IndexError:
+                break
+
+        new_name[0] = new_name[0].upper()
+
+        return ''.join(new_name).replace('_', '')
+
 
 def tab_counter(line):
     for char in line:

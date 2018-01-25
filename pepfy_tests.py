@@ -39,5 +39,35 @@ class TestFunctionName(unittest.TestCase):
         self.assertEqual(obj.pepfy_name(), 'h')
 
 
+class TestClassName(unittest.TestCase):
+    def test_pepfy_name_correct(self):
+        obj = pepfy.ClassName('PersonName')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+    def test_pepfy_first_lower(self):
+        obj = pepfy.ClassName('personName')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+    def test_pepfy_constant_like(self):
+        obj = pepfy.ClassName('PERSON_NAME')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+    def test_pepfy_function_like(self):
+        obj = pepfy.ClassName('person_name')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+    def test_pepfy_underline_beginning(self):
+        obj = pepfy.ClassName('_person_name')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+    def test_pepfy_underline_end(self):
+        obj = pepfy.ClassName('person_name_')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+    def test_pepfy_double_underline(self):
+        obj = pepfy.ClassName('person__name')
+        self.assertEqual(obj.pepfy_name(), 'PersonName')
+
+
 if __name__ == '__main__':
     unittest.main()
