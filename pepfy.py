@@ -111,4 +111,4 @@ def search_parameters(file_path):
 
 
 if __name__ == '__main__':
-    search_names('foo.py', 'def', 4, FunctionName)
+    pass

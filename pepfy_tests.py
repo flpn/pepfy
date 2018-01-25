@@ -74,5 +74,27 @@ class TestClassName(unittest.TestCase):
         self.assertEqual(obj.pepfy_name(), 'PersonName')
 
 
+class TestParameterName(unittest.TestCase):
+    def test_pepfy_name_correct(self):
+        obj = pepfy.ParameterName('h_world')
+        self.assertEqual(obj.pepfy_name(), 'h_world')
+
+    def test_pepfy_name_cammel_case(self):
+        obj = pepfy.ParameterName('hWorld')
+        self.assertEqual(obj.pepfy_name(), 'h_world')
+
+    def test_pepfy_name_class_like(self):
+        obj = pepfy.ParameterName('HWorld')
+        self.assertEqual(obj.pepfy_name(), 'h_world')
+
+    def test_pepfy_name_constant_like(self):
+        obj = pepfy.ParameterName('HWORLD')
+        self.assertEqual(obj.pepfy_name(), 'h_w_o_r_l_d')
+
+    def test_pepfy_name_one(self):
+        obj = pepfy.ParameterName('H')
+        self.assertEqual(obj.pepfy_name(), 'h')
+
+
 if __name__ == '__main__':
     unittest.main()
