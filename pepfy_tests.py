@@ -11,9 +11,14 @@ class TestSearch(unittest.TestCase):
         self.assertEqual(real, expected)
 
     def test_search_class_names(self):
-        real = set(map(lambda fn: fn.old_name, pepfy.search_names('foo.py', pepfy.CLASS_KEYWORD,
+        real = set(map(lambda cn: cn.old_name, pepfy.search_names('foo.py', pepfy.CLASS_KEYWORD,
                                                                   pepfy.CLASS_START_INDEX, pepfy.ClassName)))
         expected = {'Foo', 'bar'}
+        self.assertEqual(real, expected)
+
+    def test_search_parameter_names(self):
+        real = set(map(lambda pn: pn.old_name, pepfy.search_parameters('foo.py')))
+        expected = {'TestOne', 'test_Two', 'TEST_THREE', '_Test_four_', 'test_five', 'testsix'}
         self.assertEqual(real, expected)
 
 

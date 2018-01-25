@@ -1,16 +1,17 @@
-def foo():
+def foo(TestOne):
     return 'foo'
 
-def Bar():
+def Bar(test_Two):
     return 'Bar'
 
-def fooBar():
+def fooBar(TEST_THREE):
     return 'fooBar'
 
-def dec():
-    def wrapper():
+def dec(_Test_four_):
+    def wrapper(test_five):
         pass
 
 class Foo:
     class bar(object):
-        pass
+        def __init__(self, testsix):
+            pass
