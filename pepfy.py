@@ -8,16 +8,15 @@ MAGIC_METHODS = {
     '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__'}
 
 
-
 class Name:
     def __init__(self, old_name):
         self.old_name = old_name
 
 
 class FunctionName(Name):
-    def __init__(self, old_name, new_name=None):
+    def __init__(self, old_name):
         super().__init__(old_name)
-        self.new_name = new_name
+        self.new_name = self.pepfy_name()
 
     def pepfy_name(self):
         new_name = list(self.old_name)
@@ -28,7 +27,7 @@ class FunctionName(Name):
                 if new_name[i].isupper():
                     new_name[i] = new_name[i].lower()
 
-                    if 0 < i < len(new_name):
+                    if 0 < i < len(new_name) and new_name[i - 1] != '_':
                         new_name.insert(i, '_')
 
                 i += 1
@@ -43,9 +42,9 @@ class ParameterName(FunctionName):
 
 
 class ClassName(Name):
-    def __init__(self, old_name, new_name=None):
+    def __init__(self, old_name):
         super().__init__(old_name)
-        self.new_name = new_name
+        self.new_name = self.pepfy_name()
 
     def pepfy_name(self):
         new_name = list(self.old_name)
@@ -74,7 +73,7 @@ def tab_counter(line):
 
 
 def search_names(file_path, keyword, start_index, obj):
-    names = set()
+    names = list()
 
     with open(file_path) as ugly_file:
         for line in ugly_file.readlines():
@@ -86,13 +85,13 @@ def search_names(file_path, keyword, start_index, obj):
                 name = line[s_index:final_index]
 
                 if name not in MAGIC_METHODS:
-                    names.add(obj(name))
+                    names.append(obj(name))
 
     return names
 
 
 def search_parameters(file_path):
-    names = set()
+    names = list()
 
     with open(file_path) as ugly_file:
         for line in ugly_file.readlines():
@@ -104,11 +103,21 @@ def search_parameters(file_path):
                 parameters = line[start_index:final_index].split(',')
 
                 parameters = [ParameterName(name.strip()) for name in parameters]
-                [names.add(parameter) for parameter in parameters if (parameter.old_name != '' and parameter.old_name
-                                                                      != 'self')]
+                [names.append(parameter) for parameter in parameters if (parameter.old_name != '' and
+                                                                         parameter.old_name != 'self')]
 
     return names
 
 
+def pepfy_file(file_path):
+    function_names = search_names(file_path, FUNCTION_KEYWORD, FUNCTION_START_INDEX, FunctionName)
+    class_names = search_names(file_path, CLASS_KEYWORD, CLASS_START_INDEX, ClassName)
+    parameters_names = search_parameters(file_path)
+
+    with open(file_path) as ugly_file:
+        data = ugly_file.read()
+        # TODO
+
+
 if __name__ == '__main__':
-    pass
+    pepfy_file('foo.py')
