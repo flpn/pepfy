@@ -17,7 +17,7 @@ class text_printer():
     def Print_Text(self, Text):
         print(Text)
 def foo():
-    return 'foo'
+    return "foo"
 
 def multipleFoo(NUMBER_OF_TIMES):
     return foo() * NUMBER_OF_TIMES
@@ -25,9 +25,9 @@ def multipleFoo(NUMBER_OF_TIMES):
 if __name__ == "__main__":
     tp=text_printer()
     if len(multiple_foo(42)) % 2 == 0:
-        tp.Print_Text('Ohhhh yes!!!')
+        tp.Print_Text("Ohhhh yes!!!")
     else:
-        tp.Print_Text('Oh no!')
+        tp.Print_Text("Oh no!")
 ```
 
 New file:
@@ -46,7 +46,7 @@ def multiple_foo(number_of_times):
     return foo() * number_of_times
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     tp = TextPrinter()
    
     if len(multiple_foo(42)) % 2 == 0:
